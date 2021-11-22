@@ -48,7 +48,7 @@ resource "github_repository" "test-webhook" {
 # Create infrastructure repository
 resource "github_repository" "iac-github-demo" {
   name                 = "iac-github-demo"
-  visibility           = "private"
+  visibility           = "public" # branch protection for private repos not allow on free github
   archive_on_destroy   = true
   vulnerability_alerts = true
 }
