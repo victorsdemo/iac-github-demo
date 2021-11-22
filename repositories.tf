@@ -47,7 +47,22 @@ resource "github_repository" "test-webhook" {
 
 # Create infrastructure repository
 resource "github_repository" "iac-github-demo" {
-  name = "iac-github-demo"
+  name                 = "iac-github-demo"
+  visibility           = "private"
+  archive_on_destroy   = true
+  vulnerability_alerts = true
+}
+
+# Configure a branch protection for the iac-github-demo repository
+resource "github_branch_protection" "iac-github-demo" {
+  repository_id  = github_repository.iac-github-demo.id
+  pattern        = "master"
+  enforce_admins = true
+
+  required_pull_request_reviews {
+    dismiss_stale_reviews  = true
+    restrict_dismissals    = true
+  }
 }
 
 # Add memberships for infrastructure repository
